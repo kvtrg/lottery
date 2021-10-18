@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <meta charset="utf-8">
+      <title>Lottery</title>
+
+
+   </head>
+
+   <body>
+      <h1>Lottery Result!</h1>
+      <p id="randompick"></p>
+      <p id="picksorted"></p>
+      <p id="winningsorted"></p>
+      <p id="nummatch"></p>
+      <p id="lucky"></p>
+      <p id="winning"></p>
+
+      <p id="test1"></p>
+      <p id="test2"></p>
+
+      <script language="javascript">
+        var winInput, winArray, randomArray=[], randomLucky, winLucky, count=0, luckCheck=0;
+
+        function getRandom(){
+          for(i=0; i<5; i++){
+            randomArray[i] = Math.floor(Math.random() * 49);
+          }
+          randomLucky = Math.floor(Math.random() * 19);
+          return randomLucky, randomArray;
+        }
+
+        function getWinNum(){
+          winInput = prompt("Enter winning numbers:");
+          winArray = winInput.split(" ", 6);
+          winLucky = winArray[5];
+          winArray.pop();
+          return winArray;
+        }
+
+        function countMatch(){
+          for(i=0; i<5; i++){
+            for(k=0; k<5; k++){
+              if(randomArray[i] == winArray[k]){
+                count++;
+              }
+            }
+          }
+          return count;
+        }
+
+        function luckyCheck(){
+          if (randomLucky == winLucky){
+            luckCheck = 1;
+          }else{
+            luckCheck = 0;
+          }
+        }
+
+        function display(){
+          getRandom();
+          getWinNum();
+          countMatch();
+          luckyCheck();
+
+          winArray.sort(function(a, b){return a - b});
+
+          document.getElementById("randompick").innerHTML= "Random Pick: "
+                + randomArray.join(" ") + " lucky " + randomLucky;
+
+          randomArray.sort(function(a, b){return a - b});
+
+          document.getElementById("picksorted").innerHTML= "Pick Sorted: "
+                + randomArray.join(" ") + " lucky " + randomLucky;
+
+          document.getElementById("winningsorted").innerHTML= "Winning Numbers Sorted: "
+                + winArray.join(" ") + " lucky " + winLucky ;
+
+          document.getElementById("nummatch").innerHTML= "Number Matching: " + count;
+
+          if(luckCheck==0){
+            document.getElementById("lucky").innerHTML= "Lucky Ball Does Not Match";
+          }else{
+            document.getElementById("lucky").innerHTML= "Lucky Ball Matches";
+          }
+
+          if(count==0 && luckCheck==0){
+            document.getElementById("winning").innerHTML= "Your winnings: $0";
+          }else if(count==0 && luckCheck==1){
+            document.getElementById("winning").innerHTML= "Your winnings: $4";
+          }else if(count==1 && luckCheck==0){
+            document.getElementById("winning").innerHTML= "Your winnings: $0";
+          }else if(count==1 && luckCheck==1){
+            document.getElementById("winning").innerHTML= "Your winnings: $6";
+          }else if(count==2 && luckCheck==0){
+            document.getElementById("winning").innerHTML= "Your winnings: $3";
+          }else if(count==2 && luckCheck==1){
+            document.getElementById("winning").innerHTML= "Your winnings: $25";
+          }else if(count==3 && luckCheck==0){
+            document.getElementById("winning").innerHTML= "Your winnings: $20";
+          }else if(count==3 && luckCheck==1){
+            document.getElementById("winning").innerHTML= "Your winnings: $150";
+          }else if(count==4 && luckCheck==0){
+            document.getElementById("winning").innerHTML= "Your winnings: $200";
+          }else if(count==4 && luckCheck==1){
+            document.getElementById("winning").innerHTML= "Your winnings: $5,000";
+          }else if(count==5 && luckCheck==0){
+            document.getElementById("winning").innerHTML= "Your winnings: $25,000 a YEAR for LIFE";
+          }else if(count==5 && luckCheck==1){
+            document.getElementById("winning").innerHTML= "Your winnings: $7,000 a WEEK for LIFE";
+          }
+        }
+
+        display();
+
+      </script>
+
+   </body>
+
+</html>
